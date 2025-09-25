@@ -16,6 +16,15 @@
   
   services.displayManager.ly.enable = true;
 
+  boot.kernelParams = [
+    "snd_sof.force_probe=1"
+    "snd_sof.acp_power_gating=0"
+    "snd_hda_intel.power_save=0"
+    "snd_hda_intel.dmic_detect=0"
+    "snd_hda_intel.probe_mask=1"
+    "snd_hda_intel.enable_msi=0"
+  ];
+
   services.xserver.windowManager.dwm = {
       enable = true;
       package = pkgs.dwm.overrideAttrs {
@@ -69,6 +78,9 @@
 
   programs.firefox.enable = true;
 
+  hardware.graphics.enable = true;
+
+
   environment.systemPackages = with pkgs; [
     neovim 
     git
@@ -79,9 +91,13 @@
     feh
     pfetch
     btop
+    firefox-bin
+    qutebrowser
+    alsa-utils
     xclip
     htop
     tlp
+    libva-utils
     wget
   ];
 
