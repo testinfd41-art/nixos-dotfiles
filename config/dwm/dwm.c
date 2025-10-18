@@ -58,7 +58,7 @@
 
 /* enums */
 enum { CurNormal, CurResize, CurMove, CurLast }; /* cursor */
-enum { SchemeNorm, SchemeSel,SchemeTag, SchemeTle }; /* color schemes */
+enum { SchemeNorm, SchemeSel,SchemeTag, SchemeTle, SchemeInactive }; /* color schemes */
 enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
        NetWMFullscreen, NetActiveWindow, NetWMWindowType,
        NetWMWindowTypeDialog, NetClientList, NetLast }; /* EWMH atoms */
@@ -749,18 +749,23 @@ drawbar(Monitor *m)
 	}
 	x = 0;
         for (i = 0; i < LENGTH(tags); i++) {
-	    w = TEXTW(tags[i]);
-	    if (m->tagset[m->seltags] & 1 << i)
-		drw_setscheme(drw, scheme[SchemeTag]);   /* use tag color */
-	    else if (urg & 1 << i)
-		drw_setscheme(drw, scheme[SchemeNorm]);   /* urgent still uses SchemeSel */
-	    else
-		drw_setscheme(drw, scheme[SchemeNorm]);
+            w = TEXTW(tags[i]);
 
-	    drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
-	    x += w;
+            if (m->tagset[m->seltags] & 1 << i) {
+                /* Currently active tag */
+                drw_setscheme(drw, scheme[SchemeTag]);
+            } else if (occ & 1 << i) {
+                  /* Tag has windows */
+                drw_setscheme(drw, scheme[SchemeNorm]);
+            } else {
+                /* Empty tag */
+                drw_setscheme(drw, scheme[SchemeInactive]);
+            }
+
+            drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
+            x += w;
         }
- 	
+
 
 	w = TEXTW(m->ltsymbol);
 	drw_setscheme(drw, scheme[SchemeNorm]);

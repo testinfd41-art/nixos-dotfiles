@@ -1,0 +1,9 @@
+#work
+Allen :: https://allen.in/
+ChatGPT :: https://chatgpt.com
+Github :: https://github.com
+NixOS Wiki :: https://nixos.wiki
+NixOS Packages :: https://search.nixos.org/packages?channel=unstable&
+MyNixOS :: https://mynixos.com/
+Wikipedia :: https://wikipedia.org
+TonyBTW :: https://tonybtw.com

@@ -20,13 +20,15 @@ static const char col_cyan[]        = "#0a9df2";
 static const char col_fg[]          = "#10b4e6";
 static const char col_bg[]          = "#222222";
 static const char col_border[]      = "#005577";
+static const char col_fade[]        = "#777777"; // faded text
 static const char col_tag[]         = "#ff8800";  /* different color for selected tag */
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
 	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
-	[SchemeTle]  = { col_gray1, col_gray1, col_cyan  },
+	[SchemeTle]  = { col_tag,   col_gray1, col_cyan  },
 	[SchemeTag]  = { col_tag,   col_bg,    col_fg },   /* new scheme for tags */
+	[SchemeInactive]= { col_fade,  col_gray1, col_gray1 },
 };
 
 /* tagging */
@@ -80,7 +82,7 @@ static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
+	{ MODKEY,                       XK_f,      togglebar,      {0} },
 	{ MODKEY,                       XK_e,      spawn,          {.v = (const char*[]){ "pcmanfm", NULL }} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -111,7 +113,6 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_s,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_v,      spawn,          {.v = (const char*[]){"/home/krish/bin/clipmenu.sh", NULL}} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
@@ -122,11 +123,12 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 	  /* custom  */
 	{ MODKEY|ShiftMask,             XK_p,                       spawn,          SHCMD("~/bin/powermenu.sh") },
+	{ MODKEY,                       XK_b,                       spawn,          SHCMD("~/.local/bin/bookmarks") },
         { 0,                            XF86XK_AudioMute,           spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle") },
         { 0,                            XF86XK_AudioLowerVolume,    spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%-") },
         { 0,                            XF86XK_AudioRaiseVolume,    spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+") },
         { 0,                            XK_Print,                   spawn,          {.v = flameshot} },
-	{ 0,                            XF86XK_MonBrightnessUp,     spawn,          SHCMD("brightnessctl s +5%") },
+        { 0,                            XF86XK_MonBrightnessUp,     spawn,          SHCMD("brightnessctl s +5%") },
         { 0,                            XF86XK_MonBrightnessDown,   spawn,          SHCMD("brightnessctl s 5%-") },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)

@@ -10,7 +10,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "dope-nixos";
-  networking.wireless.enable = true;  
+  networking.networkmanager.enable = true;  
 
   time.timeZone = "Asia/Kolkata";
   
@@ -31,6 +31,7 @@
           src = ./config/dwm;
       };
   };
+  nixpkgs.config.allowUnfree = true;
 
   services.xserver = {
     enable = true;
@@ -54,7 +55,7 @@
 
       CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
       CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
-
+                 
       DEVICES_TO_DISABLE_ON_STARTUP = "bluetooth";
       
       CPU_MIN_PERF_ON_AC = 0;
@@ -62,11 +63,8 @@
       CPU_MIN_PERF_ON_BAT = 0;
       CPU_MAX_PERF_ON_BAT = 20;
       CPU_BOOST_ON_BAT = 0;   
-     # Optional helps save long term battery health
-      START_CHARGE_THRESH_BAT0 = 30; # 40 and bellow it starts to charge
-      STOP_CHARGE_THRESH_BAT0 = 80;  # 80 and above it stops charging
-    };
   };
+};
 
   users.users.krish = {
     isNormalUser = true;
@@ -76,29 +74,25 @@
     ];
   };
 
-  programs.firefox.enable = true;
-
   hardware.graphics.enable = true;
 
+  services.xserver.libinput.enable = true;
+  services.xserver.libinput.touchpad.naturalScrolling = true;
 
   environment.systemPackages = with pkgs; [
-    neovim 
-    git
+    neovim
     mpv
+    xclip
     flameshot
     brightnessctl
     pcmanfm
+    nitrogen
     feh
-    pfetch
     btop
-    firefox-bin
-    qutebrowser
     alsa-utils
-    xclip
     htop
-    tlp
+    fastfetch
     libva-utils
-    wget
   ];
 
   fonts.packages = with pkgs; [

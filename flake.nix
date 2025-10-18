@@ -1,15 +1,26 @@
 {
-  description = "Nixos";
+  description = "Nixos-flake";
+
 
   inputs = { 
-    nixpkgs.url = "nixpkgs/nixos-25.05";
+
+    nixpkgs = { 
+      url = "nixpkgs/nixos-25.05";
+    };
+
+    spicetify-nix = {
+      url = "github:Gerg-L/spicetify-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };  
+
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }: {
+  outputs = { self, nixpkgs, home-manager, spicetify-nix, ... }:{
     nixosConfigurations.dope-nixos = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
@@ -19,8 +30,14 @@
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            users.krish = import ./home.nix;
             backupFileExtension = "backup";
+    	    extraSpecialArgs = { inherit spicetify-nix; };
+            users.krish = {
+	      imports = [
+	      ./home.nix
+              spicetify-nix.homeManagerModules.default
+             ];
+	    };
           };
         }
       ];
