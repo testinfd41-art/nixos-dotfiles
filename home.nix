@@ -8,8 +8,6 @@
     ./modules/home/apps/cava.nix	
     ./modules/home/apps/torrent.nix
     ./modules/home/apps/firefox.nix
-    ./modules/home/apps/git.nix
-
   ];
 
   home.username = "krish";

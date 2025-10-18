@@ -82,6 +82,7 @@
   environment.systemPackages = with pkgs; [
     neovim
     mpv
+    git
     xclip
     flameshot
     brightnessctl
