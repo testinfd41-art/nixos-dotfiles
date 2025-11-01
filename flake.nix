@@ -5,7 +5,7 @@
   inputs = { 
 
     nixpkgs = { 
-      url = "nixpkgs/nixos-25.05";
+      url = "github:NixOS/nixpkgs/nixos-25.05";
     };
 
     spicetify-nix = {
@@ -17,7 +17,6 @@
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
   };
 
   outputs = { self, nixpkgs, home-manager, spicetify-nix, ... }:{

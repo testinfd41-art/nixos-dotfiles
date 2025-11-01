@@ -4,16 +4,12 @@
   imports = [
     ./modules/suckless.nix
     ./modules/home
-    ./modules/home/apps/dunst.nix	
-    ./modules/home/apps/cava.nix	
-    ./modules/home/apps/torrent.nix
-    ./modules/home/apps/firefox.nix
   ];
 
   home.username = "krish";
   home.homeDirectory = "/home/krish";
   home.stateVersion = "25.05";
-  programs.bash = { 
+  programs.bash = {
     enable = true;
     shellAliases = {
       nrs = "sudo nixos-rebuild switch --flake ~/nixos-dotfiles#dope-nixos";
@@ -25,12 +21,15 @@
 
   home.file.".config/dwm".source = ./config/dwm;
   home.file.".config/nvim".source = ./config/nvim;
-  
+
   home.packages = with pkgs; [
     ripgrep
-    nil
     nixpkgs-fmt
+    jq
     nodejs
     gcc
-];
+  ];
+
+  home.sessionPath = [ "/usr/local/bin" ];
+
 }
